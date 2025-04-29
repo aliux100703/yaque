@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Árbol de Corazones</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .mensaje {
+      max-width: 90%;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      color: #5C4033;
+    }
+
+    #canvas {
+      width: 100%;
+      height: auto;
+      max-width: 600px;
+      display: block;
+      margin: 20px auto;
+    }
+
+    #timer {
+      font-weight: bold;
+      margin-top: 10px;
+      font-size: 1.2rem;
+    }
+
+    @media (max-width: 600px) {
+      #timer {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mensaje">
+    <p>Para el amor de mi vida:</p>
+    <p>Si pudiera elegir un lugar seguro, sería a tu lado. Cuanto más tiempo estoy contigo, más te amo.</p>
+    <canvas id="canvas"></canvas>
+    <p>Mi amor por ti comenzó hace...</p>
+    <div id="timer"></div>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetWidth; // cuadrado
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      initHearts();
+    });
+
+    let hearts = [];
+    let heartShape = [];
+
+    function heartFunction(t) {
+      const x = 16 * Math.pow(Math.sin(t), 3);
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      return { x, y };
+    }
+
+    function generateHeartShape() {
+      heartShape = [];
+      const scale = canvas.width / 40;
+      for (let i = 0; i < 100; i++) {
+        const t = (Math.PI * 2 * i) / 100;
+        const p = heartFunction(t);
+        heartShape.push({
+          x: canvas.width / 2 + p.x * scale,
+          y: canvas.height / 2 + p.y * scale
+        });
+      }
+    }
+
+    function initHearts() {
+      hearts = [];
+      generateHeartShape();
+      for (let i = 0; i < 100; i++) {
+        hearts.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          target: heartShape[i],
+          size: Math.random() * 6 + 4,
+          color: `hsl(${Math.random() * 360}, 100%, 70%)`,
+          speed: Math.random() * 2 + 1
+        });
+      }
+    }
+
+    function drawHeart(x, y, size, color) {
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(size / 6, size / 6);
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.bezierCurveTo(0, -3, -5, -3, -5, 0);
+      ctx.bezierCurveTo(-5, 3, 0, 5, 0, 7);
+      ctx.bezierCurveTo(0, 5, 5, 3, 5, 0);
+      ctx.bezierCurveTo(5, -3, 0, -3, 0, 0);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(h => {
+        const dx = h.target.x - h.x;
+        const dy = h.target.y - h.y;
+        h.x += dx * 0.02;
+        h.y += dy * 0.02;
+        drawHeart(h.x, h.y, h.size, h.color);
+      });
+      requestAnimationFrame(animate);
+    }
+
+    function updateTimer() {
+      const inicio = new Date('2025-03-30T00:00:00');
+      const ahora = new Date();
+      const diff = ahora - inicio;
+      const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutos = Math.floor((diff / (1000 * 60)) % 60);
+      const segundos = Math.floor((diff / 1000) % 60);
+      document.getElementById('timer').innerText =
+        `${dias} días ${horas} horas ${minutos} minutos ${segundos} segundos`;
+    }
+
+    resizeCanvas();
+    initHearts();
+    animate();
+    setInterval(updateTimer, 1000);
+  </script>
+</body>
+</html>

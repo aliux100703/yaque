@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Carta para Yaquelin</title>
+  <style>
+    :root{
+      --bg:#0f1724; /* azul oscuro */
+      --card:#0b1220;
+      --accent:#ff6b81; /* rosa */
+      --accent-2:#ffd166; /* amarillo suave */
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.03);
+      --text: #e6eef8;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: radial-gradient(1200px 600px at 10% 10%, rgba(255,107,129,0.06), transparent), radial-gradient(900px 400px at 90% 90%, rgba(255,209,102,0.03), transparent), var(--bg); color:var(--text);}
+
+    .wrap{min-height:100%;display:flex;align-items:center;justify-content:center;padding:32px}
+    .card{
+      width:min(900px,96%);
+      background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));
+      border-radius:18px;
+      padding:28px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+      position:relative;overflow:hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    /* confetti area */
+    .confetti {
+      pointer-events:none;position:absolute;inset:0;z-index:0;overflow:hidden;
+    }
+
+    header{display:flex;gap:20px;align-items:center;z-index:2;position:relative}
+    .avatar{
+      width:92px;height:92px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:700;color:#07203b;font-size:32px;box-shadow:0 6px 18px rgba(255,107,129,0.12);
+    }
+    h1{font-size:28px;margin:0}
+    p.lead{margin:4px 0 0 0;color:rgba(230,238,248,0.85)}
+
+    main{display:grid;grid-template-columns:1fr 320px;gap:22px;margin-top:18px;z-index:2;position:relative}
+
+    .letter{
+      background:linear-gradient(180deg,var(--glass), var(--glass-2));padding:22px;border-radius:12px;min-height:300px;position:relative;overflow:auto;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.45);
+    }
+    .letter .texto{white-space:pre-wrap;font-size:16px;line-height:1.6;color:var(--text)}
+
+    .side{
+      padding:18px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;align-self:start;height:fit-content;
+    }
+
+    .btns{display:flex;gap:10px;margin-top:12px}
+    button{cursor:pointer;border:0;padding:10px 14px;border-radius:10px;font-weight:600;background:transparent;color:var(--text);outline:1px solid rgba(255,255,255,0.04)}
+    .primary{background:linear-gradient(90deg,var(--accent),#ff8fa0);color:#07203b;border:0;box-shadow:0 8px 20px rgba(255,107,129,0.08)}
+
+    .small{font-size:13px;opacity:0.9}
+
+    footer{margin-top:18px;text-align:center;color:rgba(230,238,248,0.6);font-size:13px}
+
+    /* heart animation */
+    .heart{
+      width:60px;height:60px;position:absolute;right:20px;top:20px;z-index:2;transform-origin:center;animation:beat 1.2s infinite;
+    }
+    @keyframes beat{
+      0%{transform:scale(1)}
+      35%{transform:scale(1.12)}
+      60%{transform:scale(0.98)}
+      100%{transform:scale(1)}
+    }
+
+    /* responsive */
+    @media (max-width:900px){main{grid-template-columns:1fr} .side{order:2}}
+
+    /* typed cursor */
+    .cursor{display:inline-block;width:8px;height:18px;background:var(--accent);margin-left:6px;border-radius:4px;vertical-align:middle;animation:blink 1s steps(2) infinite}
+    @keyframes blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="confetti" id="confetti"></div>
+
+      <svg class="heart" viewBox="0 0 32 29" aria-hidden="true">
+        <path fill="url(#g)" d="M23.6 0c-2.8 0-4.9 1.8-6 3.6C15.3 1.8 13.2 0 10.4 0 4.7 0 0 4.7 0 10.4c0 6.5 6.2 11.5 15.6 18.2l1.1.8 1.1-.8C25.8 21.9 32 16.9 32 10.4 32 4.7 27.3 0 23.6 0z"/>
+        <defs>
+          <linearGradient id="g" x1="0" x2="1">
+            <stop offset="0" stop-color="#ff6b81" />
+            <stop offset="1" stop-color="#ffd166" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <header>
+        <div class="avatar">Y</div>
+        <div>
+          <h1>Para Yaquelin</h1>
+          <p class="lead small">Una carta hecha con cariño — abre, respira y sonríe.</p>
+        </div>
+      </header>
+
+      <main>
+        <section class="letter">
+          <div class="texto" id="texto">
+            <!-- Texto aparecerá aquí con efecto de máquina de escribir -->
+          </div>
+        </section>
+
+        <aside class="side">
+          <div style="font-weight:700;font-size:16px;margin-bottom:8px">Opciones</div>
+          <div class="small">Personaliza la carta o comparte:</div>
+          <div class="btns">
+            <button class="primary" id="revealBtn">Mostrar carta</button>
+            <button id="downloadBtn">Descargar .html</button>
+          </div>
+
+        </aside>
+      </main>
+
+      <footer>Con cariño, <strong>Tu pulgoso</strong> ❤️</footer>
+    </div>
+  </div>
+
+  <script>
+    const carta = `Mi amada Yaquelin,
+
+Desde el primer día que nuestras miradas se cruzaron, supe que había encontrado algo que vale la pena cuidar: tu risa, tu manera de ver el mundo y la forma en que me llenas de calma aun en los días más difíciles.
+
+Quiero agradecerte por cada momento compartido: las charlas largas, los silencios cómodos, los sueños que dibujamos juntos y las pequeñas locuras que solo nosotros entendemos. Contigo aprendí que el amor también es paciencia, comprensión y ganas de crecer de la mano.
+
+Hoy te escribo para recordarte lo especial que eres para mí. No solo por lo que veo —tu ternura, tu fuerza— sino por lo que siento cuando estoy a tu lado. Me inspiras a ser mejor y a valorar lo importante: tú, nuestra complicidad y las historias que aún nos faltan por vivir.
+
+Prometo estar a tu lado en las risas y en las tormentas, celebrar tus victorias y sostenerte cuando lo necesites. Mi corazón es tuyo, y cada día a tu lado es un regalo que atesoro.
+
+Te amo con todo mi ser,
+
+`;
+
+    const textoEl = document.getElementById('texto');
+    const revealBtn = document.getElementById('revealBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    // Efecto máquina de escribir
+    function escribir(texto, speed = 24){
+      textoEl.textContent = '';
+      let i = 0;
+      const cursor = document.createElement('span');
+      cursor.className = 'cursor';
+      textoEl.appendChild(cursor);
+
+      return new Promise((resolve)=>{
+        function step(){
+          if(i < texto.length){
+            cursor.remove();
+            textoEl.textContent += texto[i++];
+            textoEl.appendChild(cursor);
+            // pausa extra en puntos y comas
+            let delay = speed;
+            if(texto[i-1] === ',' ) delay = speed * 6;
+            if(texto[i-1] === '.' ) delay = speed * 10;
+            setTimeout(step, delay);
+          } else {cursor.remove();resolve();}
+        }
+        step();
+      });
+    }
+
+    // Confetti simple
+    function lanzarConfetti(){
+      const wrap = document.getElementById('confetti');
+      // crear 40 piezas
+      for(let i=0;i<40;i++){
+        const el = document.createElement('div');
+        const size = Math.random()*10 + 6;
+        el.style.width = size + 'px';
+        el.style.height = (size*0.6) + 'px';
+        el.style.position = 'absolute';
+        el.style.left = Math.random()*100 + '%';
+        el.style.top = '-10%';
+        el.style.opacity = (Math.random()*0.6 + 0.4).toString();
+        el.style.transform = 'rotate('+ (Math.random()*360) +'deg)';
+        el.style.background = `linear-gradient(90deg, ${randomColor()}, ${randomColor()})`;
+        el.style.borderRadius = '2px';
+        el.style.zIndex = 0;
+        wrap.appendChild(el);
+
+        const fall = 3000 + Math.random()*2400;
+        el.animate([
+          {transform: `translateY(0) rotate(0deg)`, opacity:el.style.opacity},
+          {transform: `translateY(110vh) rotate(${Math.random()*360}deg)`, opacity:0.8}
+        ],{duration:fall,iterations:1,easing:'cubic-bezier(.2,.8,.2,1)'});
+
+        setTimeout(()=>el.remove(), fall+100);
+      }
+    }
+    function randomColor(){
+      const palette = ['#ff6b81','#ffd166','#9be7ff','#cfd8ff','#bde7c8','#ffd1e6'];
+      return palette[Math.floor(Math.random()*palette.length)];
+    }
+
+    // botón mostrar
+    revealBtn.addEventListener('click', async ()=>{
+      revealBtn.disabled = true; revealBtn.textContent = 'Cargando...';
+      await escribir(carta, 18);
+      lanzarConfetti();
+      revealBtn.textContent = 'Mostrar carta';
+      revealBtn.disabled = false;
+    });
+
+    // descarga del html
+    downloadBtn.addEventListener('click', ()=>{
+      const html = document.documentElement.outerHTML;
+      const blob = new Blob([html],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'carta_para_yaquelin.html';
+      document.body.appendChild(a);a.click();a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    // auto mostrar al cargar después de 600ms
+    window.addEventListener('load',()=>{
+      setTimeout(()=>{revealBtn.click();},600);
+    });
+
+  </script>
+</body>
+</html>
